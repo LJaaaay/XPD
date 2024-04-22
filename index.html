@@ -1,0 +1,128 @@
+<!-- This HTML can be rendered using Flask's render_template if you want to keep HTML separate -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disclaimer / Guarantee of Payment</title>
+    <style>
+        img {
+            margin-left: 150px;
+            float: right;
+            max-width: 150px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        .box {
+            width: 350px;
+        }
+        .address {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <form id="pdfForm">
+        Date: <input type="text" name="date" id="date"><br>
+        Consignee: <input type="text" name="consignee" id="consignee"><br>
+        Container: <input type="text" name="container" id="container"><br>
+        MBL#: <input type="text" name="mbl_number" id="mbl_number"><br>
+        xpd file #: <input type="text" name="file_number" id="file_number"><br>
+        <button type="submit">Generate Preview</button>
+    </form>
+    <div id="preview"></div>
+    
+    <script>
+        document.getElementById('pdfForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting via the browser
+            var previewDiv = document.getElementById('preview');
+            var date = document.getElementById('date').value;
+            var consignee = document.getElementById('consignee').value;
+            var container = document.getElementById('container').value;
+            var mbl_number = document.getElementById('mbl_number').value;
+            var file_number = document.getElementById('file_number').value;
+            
+            previewDiv.innerHTML = `
+            <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Disclaimer / Guarantee of Payment</title>
+        <style>
+            
+            .PDFborder{
+            border: 2px solid black;
+                width: 900px;
+                height: 1000px;
+                padding: 20px;
+            }
+            img {
+                margin-left: 150px;
+                float: right;
+                max-width: 150px; /* Ajusta el tamaño de la imagen según sea necesario */
+            }
+            .container {
+            display: flex;
+            justify-content: center;
+            }
+            .box {
+                width: 350px;
+                
+            }
+            
+            .address {
+            float: right;
+           
+        }
+        </style>
+    </head>
+    <body>
+        <br><br><br>
+        <div class="PDFborder">
+                <div style="display: flex; justify-content: center;">
+                    <div>
+                        <h1><strong>DISCLAIMER / GUARANTEE OF PAYMENT</strong></h1>
+                    </div>
+                    <div>
+                        <img src="file:///E:/XPD Global/XPDtryouts/PDF/xpdLogo.png" alt="XPD Logo">
+                    </div>
+                </div>
+                <hr style="height:2px;border-width:0;color:#0460FA;background-color:#0460FA">
+                <div class="container">
+                    <div class="box">
+                        <p>Date: <strong>${date}</strong></p>
+                        <p>To: <strong>${consignee}</strong></p>
+                    </div>
+                    <div class="box">
+                        <p>Container: <strong>${container}</strong></p>
+                        <p>MBL#: <strong>${mbl_number}</strong></p>
+                        <p>xpd file #: <strong>${file_number}</strong></p>
+                    </div>
+                </div>
+                <hr style="height:2px;border-width:0;color:#0460FA;background-color:#0460FA">
+        <p>Demurrage/Detention starts when the container is not returned before the last day of allowed “free time” (as per Arrival Notice). Demurrage will accumulate until the container is returned to Port/Depot. All customers are obligated to return empty container within free time provided by Shipping Line, in events of late return, Demurrage/Detention will be billed back to your account.</p>
+        <p>Re-use of the container for re-export must be confirmed prior empty return and request must be send before LFD to avoid charges.</p>
+        <p>Please acknowledge and sign disclaimer before Port/Rail yard arrival in order to receive full release from XPD Global Canada.</p><br><br><br>
+            <div style="text-align: center;">
+                <p>COMPANY: ________________________________________________________________</p>
+                <p>DATE: ____________________________________________________________________</p>
+                <p>PRINT NAME: ______________________________________________________________</p>
+                <p>SIGNATURE: _______________________________________________________________</p>
+            </div>  <br><br><br>
+            <div class="address">
+                <p>XPD Global Canada</p>
+                <p>6 - 5810 Ambler Dr.,</p>
+                <p>Mississauga, ON L4W 4J5 Canada</p>
+                <p>canada@xpdglobal.com</p>
+            </div>
+        </div>
+    </body>
+</html>
+            `; 
+        });
+    </script>
+</body>
+</html>
